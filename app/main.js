@@ -1,15 +1,31 @@
 const electron = require('electron')
 // Module to control application life.
-const app = electron.app
+//const app = electron.app
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
-const Menu = electron.Menu
+//const BrowserWindow = electron.BrowserWindow
+//const Menu = electron.Menu
+
+const {app, BrowserWindow, Menu} = electron
 
 const path = require('path')
 const url = require('url')
 
 var devMenuTemplate  = require('./menu/menu_dev_template')
 var editMenuTemplate = require('./menu/menu_edit_template')
+
+menuTemplate = [
+  {
+    label: 'Application',
+    submenu: [
+      {
+        label: 'About',
+        click: () => {
+          openAboutWindow()
+        }
+      }
+    ]
+  }
+]
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -36,22 +52,53 @@ function createWindow () {
     slashes: true
   }))
 
+  // Set up the menu
+  var menu = Menu.buildFromTemplate(menuTemplate)
+  mainWindow.setMenu(menu)
+
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+  mainWindow.on('closed', () => {
     mainWindow = null
+  })
+}
+
+// Opens the about window
+function openAboutWindow() {
+
+  let aboutWindow = new BrowserWindow({
+    parent: mainWindow,
+    modal: true,
+    show: false,
+    width: 400,
+    height: 200
+  })
+  aboutWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'about.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+  aboutWindow.setMenu(null)
+  aboutWindow.once('ready-to-show', () => {
+    aboutWindow.show()
   })
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+//app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow()
+  electron.powerMonitor.on('on-ac', () => {
+    mainWindow.restore()
+  })
+  electron.powerMonitor.on('on-battery', () => {
+    mainWindow.minimize()
+  })
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

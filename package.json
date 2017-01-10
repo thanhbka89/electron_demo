@@ -26,11 +26,13 @@
     "electron-prebuilt": "^1.4.13"
   },
   "build": {
-        "appId": "hr.creaticon.eatodo",
-        "win": {
-            "title": "EA Todo",
-            "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
-        }
+    "appId": "hr.creaticon.eatodo",
+    "win": {
+      "title": "EA Todo",
+      "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
     }
-
+  },
+  "dependencies": {
+    "nedb": "^1.8.0"
+  }
 }
