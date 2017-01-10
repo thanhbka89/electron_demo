@@ -13,19 +13,29 @@ const url = require('url')
 var devMenuTemplate  = require('./menu/menu_dev_template')
 var editMenuTemplate = require('./menu/menu_edit_template')
 
-menuTemplate = [
-  {
+menuTemplate = [{
     label: 'Application',
-    submenu: [
-      {
-        label: 'About',
-        click: () => {
-          openAboutWindow()
+    submenu: [{
+            label: 'About',
+            click: () => {
+                openAboutWindow()
+            }
+        },
+        {
+            label: 'Alert',
+            click: () => {
+                console.log('About Clicked');
+            }
+        },
+        { type: 'separator' },
+        {
+            label: 'Quit',
+            click: () => {
+                app.quit();
+            }
         }
-      }
     ]
-  }
-]
+}]
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -43,7 +53,12 @@ function createWindow () {
   //setApplicationMenu();
 
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1280, height: 720})
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    //frame: false,
+    resizable: false
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -55,9 +70,10 @@ function createWindow () {
   // Set up the menu
   var menu = Menu.buildFromTemplate(menuTemplate)
   mainWindow.setMenu(menu)
+  //Menu.setApplicationMenu(menu)
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
