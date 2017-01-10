@@ -13,29 +13,51 @@ const url = require('url')
 var devMenuTemplate  = require('./menu/menu_dev_template')
 var editMenuTemplate = require('./menu/menu_edit_template')
 
-menuTemplate = [{
-    label: 'Application',
-    submenu: [{
-            label: 'About',
-            click: () => {
-                openAboutWindow()
+var menuTemplate = [{
+        label: 'Application',
+        submenu: [{
+                label: 'About',
+                click: () => {
+                    openAboutWindow()
+                }
+            },
+            {
+                label: 'Alert',
+                click: () => {
+                    console.log('About Clicked');
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Quit',
+                accelerator: 'Ctrl+Q',
+                click: () => {
+                    app.quit();
+                }
             }
-        },
-        {
-            label: 'Alert',
-            click: () => {
-                console.log('About Clicked');
+        ]
+    },
+    {
+        label: 'Action',
+        submenu: [{
+                label: 'Reload',
+                accelerator: 'Ctrl+R',
+                click: function() {
+                    BrowserWindow.getFocusedWindow().reload();
+                }
+            },
+            {
+                label: 'Toggle DevTools',
+                accelerator: 'Alt+Ctrl+I',
+                click: function() {
+                    BrowserWindow.getFocusedWindow().toggleDevTools();
+                }
             }
-        },
-        { type: 'separator' },
-        {
-            label: 'Quit',
-            click: () => {
-                app.quit();
-            }
-        }
-    ]
-}]
+        ]
+    }
+]
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
