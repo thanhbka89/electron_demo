@@ -1,0 +1,36 @@
+{
+  "name": "electron-quick-start",
+  "productName": "First App Desktop",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron . --enable-logging",
+    "package": "electron-packager . MyApp --asar",
+    "dist": "build --x64 --ia32"
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.4.1",
+    "electron-builder": "^11.2.3",
+    "electron-packager": "^8.4.0",
+    "electron-prebuilt": "^1.4.13"
+  },
+  "build": {
+        "appId": "hr.creaticon.eatodo",
+        "win": {
+            "title": "EA Todo",
+            "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
+        }
+    }
+
+}
